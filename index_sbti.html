@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SBTI 人格测试 — 趣味人格测试 App</title>
+  <meta name="description" content="SBTI 人格测试：32 道题、15 个维度，本地趣味人格测试，结果仅保存在你的设备。" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #14141c;
+      --text: #f4f4f7;
+      --muted: #9090a0;
+      --violet: #8b5cf6;
+      --cyan: #22d3ee;
+      --border: rgba(255, 255, 255, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 1.5rem 5rem;
+      text-align: center;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto;
+      height: 80%;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139, 92, 246, 0.35), transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 80% 20%, rgba(34, 211, 238, 0.12), transparent 55%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; max-width: 640px; margin: 0 auto; }
+    .logo {
+      font-size: clamp(3rem, 12vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--violet), #6366f1, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 1.2rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 1.5rem;
+    }
+    .lead {
+      font-size: 1.05rem;
+      color: #b8b8c8;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: default;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet), #6366f1);
+      color: #fff;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+    }
+    .btn-ghost[href]:hover {
+      background: rgba(34, 211, 238, 0.08);
+      text-decoration: none;
+    }
+    a.btn-ghost { text-decoration: none; cursor: pointer; }
+    .store-hint {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 2.5rem 0 1rem;
+      font-weight: 700;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.35rem;
+    }
+    .feature h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+      color: #e8e8f0;
+    }
+    .feature p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .disclaimer {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .disclaimer strong { color: #c8c8d4; }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="logo">SBTI</p>
+      <p class="tagline">趣味人格测试</p>
+      <p class="lead">
+        一款轻量、本地的 iOS 应用。32 道精选题，覆盖 15 个维度，用清晰的算法匹配最接近你的人格类型，还有本地历史记录，随时回顾每一次测试结果。
+      </p>
+
+    </div>
+  </header>
+
+  <main>
+    <h2>主要功能</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">◈</div>
+        <h3>15 个维度</h3>
+        <p>从自我、情感、态度、行动驱力到社交等多角度设问，更立体地呈现答题倾向。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">≡</div>
+        <h3>32 道题，流畅作答</h3>
+        <p>一题一屏、选项清晰，节奏轻松，适合碎片时间完成。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">◇</div>
+        <h3>算法匹配结果</h3>
+        <p>基于答题模式匹配趣味人格类型结果图，仅供娱乐与自我探索。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">◎</div>
+        <h3>历史记录（本地）</h3>
+        <p>测试结果保存在本机，可浏览、查看详情或管理记录，无需注册账号。</p>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <p><strong>说明</strong>：本应用改编自网络流传的 SBTI 趣味测试形式；灵感来源见应用内致谢。测试结果<strong>不构成</strong>心理咨询、医疗诊断或职业建议。如有心理困扰，请咨询专业机构。</p>
+      <p style="margin-top: 0.75rem; margin-bottom: 0;"><strong>隐私</strong>：当前版本答题与历史数据仅保存在你的设备上。详见隐私政策。</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>SBTI 人格测试 · </p>
+    <p style="margin-top: 0.5rem;">© 2026 · Amos</p>
+  </footer>
+</body>
+</html>
